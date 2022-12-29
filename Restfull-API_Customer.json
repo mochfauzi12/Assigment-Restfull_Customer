@@ -1,0 +1,285 @@
+{
+    "openapi":"3.0.2",
+    "info": {
+      "title":"Costumers RESTful API",
+      "description": "API Spec for Customers RESTful API",
+      "version":"1.0"
+    },
+    "servers": [
+      {"url":"http://localhost:8000/customers"}
+    ],
+    "paths": {
+      "/customers" : {
+        "get" : {
+          "security": [{
+            "CustomersAuth": []
+          }],
+          "tags": ["Customers API"],
+          "description": "List all Costumers",
+          "summary": "List all Costumers",
+          "responses": {
+            "400" : {
+              "description": "Success get all costumers",
+              "content": {
+                "application/json": {
+                  "schema":{
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref" : "#/components/schemas/Customers"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "security": [{
+            "Customers": []
+          }],
+          "tags": ["Customers API"],
+          "summary": "Create new Customers",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrUpdateCustomers"
+                }
+              }
+            }
+          },
+          "responses": {
+            "400": {
+              "description": "Success Create Customers",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "data" : {
+                        "$ref" : "#/components/schemas/Customers"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/customer/{customerId}" : {
+        "get" : {
+          "security": [{
+            "Customers": []
+          }],
+          "tags": ["Customers API"],
+          "summary": "Get customers by Id",
+          "description": "Get customers by id",
+          "parameters": [
+            {
+              "name": "customers",
+              "in": "path",
+              "description": "CustomersId"
+            }
+          ],
+          "responses": {
+            "400" : {
+              "description": "Success get customer",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "data" : {
+                        "$ref": "#/components/schemas/Customers"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete" : {
+          "security": [{
+            "Customers": []
+          }],
+          "tags": ["Customers API"],
+          "summary": "Delete customers by Id",
+          "description": "Delete customers by id",
+          "parameters": [
+            {
+              "name": "customers",
+              "in": "path",
+              "description": "Category Id"
+            }
+          ],
+          "responses": {
+            "400" : {
+              "description": "Success delete customers",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put" : {
+          "security": [{
+            "Customers": []
+          }],
+          "tags": ["Customers API"],
+          "summary": "Update customers by Id",
+          "description": "Update customers by Id",
+          "parameters": [
+            {
+              "name": "customers",
+              "in": "path",
+              "description": "Customers Id"
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrUpdateCustomers"
+                }
+              }
+            }
+          },
+          "responses": {
+            "400" : {
+              "description": "Success get customers",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "data" : {
+                        "$ref": "#/components/schemas/Customers"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "Customers": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "X-API-Key",
+          "description": "Authentication for Customers API"
+        }
+      },
+      "schemas": {
+        "CreateOrUpdateCustomers" : {
+          "type": "object",
+          "properties": {
+            "name" : {
+              "type": "string"
+            },
+            "address" : {
+                "type": "string"
+              },
+              "phoneNumber" : {
+                "type": "integer"
+              },
+              "email" : {
+                "type": "string"
+              },
+              "created_at" : {
+                "type": "string"
+              },
+              "update_at" : {
+                "type": "string"
+              },
+              "delete_at" : {
+                "type": "string"
+              }
+          }
+        },
+        "Customers": {
+          "type": "object",
+          "properties": {
+
+            "id" : {
+              "type": "number"
+            },
+
+            "name" : {
+              "type": "string"
+            },
+            "address" : {
+                "type": "string"
+              },
+
+              "phoneNumber" : {
+                "type": "integer"
+              },
+
+              "email" : {
+                "type": "string"
+              },
+
+              "created_at" : {
+                "type": "string"
+              },
+
+              "update_at" : {
+                "type": "string"
+              },
+
+              "delete_at" : {
+                "type": "string"
+              }
+            
+          }
+        }
+      }
+    }
+  }
